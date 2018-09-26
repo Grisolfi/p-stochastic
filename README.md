@@ -7,4 +7,4 @@ a repository for stochastic processes studies
 
 - `apt-get install python3-tk`
 
-- `python3 pre.py N` where N is the number os samples
+- `python3 main.py N` where N is the number os samples
