@@ -2,12 +2,12 @@ import numpy as np
 
 class Dist(object):
 
-    def __init__(self, N, n, p):
+    def __init__(self, SAMPLES, a, p):
         self.rand = np.random.random
         self.factorial = np.math.factorial
         self.sum = np.sum
-        self.N = N
-        self.n = n
+        self.SAMPLES = SAMPLES
+        self.n = n # Number of experiments
         self.p = p
         self.args = {
             'mt': self.theory_mean(),
@@ -24,19 +24,12 @@ class Dist(object):
         Variância prática: {vp}
         """.format(**self.args)
 
-    def pmf_teorica(self):
-        kteorico = np.zeros(self.n)
-        l = np.arange(self.n)+1
-        for k in l:
-            kteorico[k-1] = self._coef(k) * ((self.p**k)*(1-self.p)**(self.n-k))
-        return kteorico
-
     def random_variable(self):
-        kpratico = np.zeros(self.N)
-        l = np.arange(self.N)+1
-        for k in l:
-            kpratico[k-1] = self._rand()  #rand_binom || rand_pascal
-        return kpratico
+        X_simulation = np.zeros(self.SAMPLES)
+        vector = np.arange(self.SAMPLES)+1
+        for i in l:
+            X_simulation[i-1] = self._rand()  #rand_binom || rand_pascal
+        return X_simulation
 
     # TODO Integrate this method with plt.bar plot type
     # def pmf_pratica(self):
