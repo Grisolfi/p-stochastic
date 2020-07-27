@@ -9,9 +9,8 @@ container:
 
 steps:
        
-  - script: flow -i deploy create -f env_vars with tag-tracker sort-by time > created_deploy_vars
-  - script: cat created_deploy_vars
-  - script: | 
+  - script: |
+      flow -i deploy create -f env_vars with tag-tracker sort-by time > created_deploy_vars
       source created_deploy_vars
       flow -i sast run --start-commit "$FLOW_DEPLOY_PREVIOUS_VERSION_COMMIT" --end-commit "$FLOW_DEPLOY_CURRENT_VERSION_COMMIT"
       
