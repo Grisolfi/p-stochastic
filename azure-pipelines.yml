@@ -1,0 +1,21 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+container: 
+  image: convisoappsec/flowcli
+
+steps:
+   - bash: |
+      flow -i deploy create \
+          -f env_vars with tag-tracker \
+          sort-by time > created_deploy_vars || exit 1
+      cat created_deploy_vars
+      source created_deploy_vars
+      flow -i sast run --start-commit "$FLOW_DEPLOY_PREVIOUS_VERSION_COMMIT" --end-commit "$FLOW_DEPLOY_CURRENT_VERSION_COMMIT" || exit 1
+     env:
+       FLOW_API_KEY: $(FLOW_API_KEY)
+       FLOW_API_URL: $(FLOW_API_URL)
+       FLOW_PROJECT_CODE: "Kt5p5zKb_zbth0o0"
